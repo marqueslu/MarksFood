@@ -12,6 +12,7 @@ namespace MarksFoodApi.Domain.Entities
         }
 
         public Discount(
+            string description,
             Guid ingredientAllowed,
             Guid? ingredientNotAllowed,
             EDiscountRule discountRule,
@@ -19,6 +20,7 @@ namespace MarksFoodApi.Domain.Entities
             int? quantity,
             decimal discountPercent)
         {
+            Description = description;
             IngredientAllowed = ingredientAllowed;
             IngredientNotAllowed = ingredientNotAllowed;
             DiscountRule = discountRule;
@@ -27,6 +29,7 @@ namespace MarksFoodApi.Domain.Entities
             DiscountPercent = discountPercent;
         }
 
+        public string Description { get; set; }
         public Guid IngredientAllowed { get; private set; }
         public Guid? IngredientNotAllowed { get; private set; }
         public EDiscountRule DiscountRule { get; private set; }
