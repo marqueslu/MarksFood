@@ -8,8 +8,8 @@ namespace MarksFoodApi.Domain.Repositories
     {
         void Save(Snack ingredient);
         void Update(Snack ingredient);
-        bool SnackExists(string name);
-        IEnumerable<Snack> GetAllIngredients();
+        Snack SnackExists(string name);
+        IEnumerable<Snack> GetAllSnacks();
         Snack GetById(Guid id);
     }
 }
