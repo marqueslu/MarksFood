@@ -23,5 +23,11 @@ namespace MarksFoodApi.Domain.Entities
         {
             Quantity = quantity;
         }
+
+        public void Update(string name, decimal price)
+        {
+            Name = name;
+            Price = price;
+        }
     }
 }

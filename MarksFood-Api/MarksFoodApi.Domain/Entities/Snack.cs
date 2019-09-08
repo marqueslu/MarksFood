@@ -27,5 +27,10 @@ namespace MarksFoodApi.Domain.Entities
             _ingredients.Add(ingredient);
         }
 
+        public void update(string name)
+        {
+            Name = name;
+        }
+
     }
 }
