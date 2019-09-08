@@ -8,9 +8,4 @@
     <ProjectReference Include="..\MarksFoodApi.Shared\MarksFoodApi.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Commands\Handlers\" />
-    <Folder Include="Commands\Results\" />
-  </ItemGroup>
-
 </Project>
