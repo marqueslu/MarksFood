@@ -1,8 +1,6 @@
 ﻿using MarksFoodApi.Domain.Enums;
 using MarksFoodApi.Shared.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MarksFoodApi.Domain.Entities
 {

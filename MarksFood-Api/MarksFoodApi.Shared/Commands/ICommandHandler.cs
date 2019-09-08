@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MarksFoodApi.Shared.Commands
+﻿namespace MarksFoodApi.Shared.Commands
 {
     public interface ICommandHandler<T> where T : ICommand
     {
