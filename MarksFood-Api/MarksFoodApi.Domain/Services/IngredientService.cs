@@ -2,6 +2,8 @@
 using MarksFoodApi.Domain.Commands.Results;
 using MarksFoodApi.Domain.Entities;
 using MarksFoodApi.Domain.Repositories;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MarksFoodApi.Domain.Services
 {
@@ -46,6 +48,11 @@ namespace MarksFoodApi.Domain.Services
                 Message = "Ingredient updated with success.",
                 Data = ingredient
             };
+        }
+
+        public async Task<IEnumerable<IngredientOutput>> ListIngredients()
+        {
+            return await _ingredientRepository.GetAllIngredients();
         }
     }
 }

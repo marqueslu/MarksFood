@@ -34,6 +34,7 @@ CREATE TABLE Discount(
 	DiscountType INT NOT NULL,
 	Quantity INT,
 	[Percent] DECIMAL(5,2) NOT NULL,
+	Active BIT NOT NULL,
 	FOREIGN KEY([IdIngredientAllowed]) REFERENCES [Ingredient]([Id]),
 	FOREIGN KEY([IdIngredientRestrict]) REFERENCES [Ingredient]([Id])
 )

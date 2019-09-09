@@ -1,9 +1,12 @@
-﻿using MarksFoodApi.Domain.Entities;
+﻿using Dapper;
+using MarksFoodApi.Domain.Commands.Results;
+using MarksFoodApi.Domain.Entities;
 using MarksFoodApi.Domain.Repositories;
 using MarksFoodApi.Infra.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MarksFoodApi.Infra.Repositories
 {
@@ -16,9 +19,9 @@ namespace MarksFoodApi.Infra.Repositories
             _context = context;
         }
 
-        public IEnumerable<Ingredient> GetAllIngredients()
+        public async Task<IEnumerable<IngredientOutput>> GetAllIngredients()
         {
-            throw new NotImplementedException();
+            return await _context.Connection.QueryAsync<IngredientOutput>("SELECT [ID], [NAME], [PRICE] FROM INGREDIENT", new { });
         }
 
         public Ingredient GetById(Guid id)

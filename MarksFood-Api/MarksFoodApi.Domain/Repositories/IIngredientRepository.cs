@@ -1,7 +1,9 @@
-﻿using MarksFoodApi.Domain.Entities;
+﻿using MarksFoodApi.Domain.Commands.Results;
+using MarksFoodApi.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MarksFoodApi.Domain.Repositories
 {
@@ -10,7 +12,7 @@ namespace MarksFoodApi.Domain.Repositories
         void Save(Ingredient ingredient);
         void Update(Ingredient ingredient);
         Ingredient IngredientExists(string name);
-        IEnumerable<Ingredient> GetAllIngredients();
+        Task<IEnumerable<IngredientOutput>> GetAllIngredients();
         Ingredient GetById(Guid id);
     }
 }
