@@ -19,9 +19,9 @@ namespace MarksFoodApi.Infra.Repositories
             _context = context;
         }
 
-        public IEnumerable<GetSnackCommandResult> GetAllSnacks()
+        public IEnumerable<SnackOutput> GetAllSnacks()
         {
-            var snacks = _context.Connection.Query<GetSnackCommandResult>("SELECT [Id], [Name] FROM [Snack]", new { });
+            var snacks = _context.Connection.Query<SnackOutput>("SELECT [Id], [Name] FROM [Snack]", new { });
 
             foreach (var snack in snacks)
             {

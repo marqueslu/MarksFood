@@ -1,11 +1,10 @@
 ﻿using MarksFoodApi.Domain.Enums;
-using MarksFoodApi.Shared.Commands;
 using System;
 
 
 namespace MarksFoodApi.Domain.Commands.Inputs
 {
-    class RegisterDiscountCommand : ICommand
+    class DiscountInput
     {
         public Guid ingredientAllowed { get; set; }
         public Guid? ingredientNotAllowed { get; set; }

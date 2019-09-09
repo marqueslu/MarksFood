@@ -1,5 +1,5 @@
-﻿using MarksFoodApi.Domain.Enums;
-using MarksFoodApi.Shared.Entities;
+﻿using MarksFoodApi.Domain.Entities.Base;
+using MarksFoodApi.Domain.Enums;
 using System;
 
 namespace MarksFoodApi.Domain.Entities

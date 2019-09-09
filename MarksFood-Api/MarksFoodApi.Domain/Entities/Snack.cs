@@ -1,4 +1,4 @@
-﻿using MarksFoodApi.Shared.Entities;
+﻿using MarksFoodApi.Domain.Entities.Base;
 using System.Collections.Generic;
 using System.Linq;
 

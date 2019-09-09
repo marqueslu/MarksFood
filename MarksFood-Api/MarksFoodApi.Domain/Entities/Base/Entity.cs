@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace MarksFoodApi.Shared.Entities
+namespace MarksFoodApi.Domain.Entities.Base
 {
     public class Entity
     {

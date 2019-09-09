@@ -2,24 +2,24 @@
 using MarksFoodApi.Domain.Commands.Results;
 using MarksFoodApi.Domain.Entities;
 using MarksFoodApi.Domain.Repositories;
-using MarksFoodApi.Shared.Commands;
 
-namespace MarksFoodApi.Domain.Commands.Handlers
+namespace MarksFoodApi.Domain.Services
 {
-    class IngredientCommandHandler : ICommandHandler<RegisterIngredientCommand>, ICommandHandler<UpdateIngredientCommand>
+    public class IngredientService
     {
+
         private readonly IIngredientRepository _ingredientRepository;
-        public IngredientCommandHandler(IIngredientRepository ingredientRepository)
+        public IngredientService(IIngredientRepository ingredientRepository)
         {
             _ingredientRepository = ingredientRepository;
         }
 
-        public ICommandResult Handle(RegisterIngredientCommand command)
+        public RegisterAndUpdateOutput Create(IngredientInput command)
         {
             var ingredient = new Ingredient(command.Name, command.Price);
             _ingredientRepository.Save(ingredient);
 
-            return new RegisterAndUpdateCommandResult
+            return new RegisterAndUpdateOutput
             {
                 Success = true,
                 Message = "Ingredient registered with success.",
@@ -27,7 +27,7 @@ namespace MarksFoodApi.Domain.Commands.Handlers
             };
         }
 
-        public ICommandResult Handle(UpdateIngredientCommand command)
+        public RegisterAndUpdateOutput Update(IngredientInput command)
         {
             var ingredient = _ingredientRepository.GetById(command.Id);
 
@@ -40,7 +40,7 @@ namespace MarksFoodApi.Domain.Commands.Handlers
 
             _ingredientRepository.Update(ingredient);
 
-            return new RegisterAndUpdateCommandResult
+            return new RegisterAndUpdateOutput
             {
                 Success = true,
                 Message = "Ingredient updated with success.",

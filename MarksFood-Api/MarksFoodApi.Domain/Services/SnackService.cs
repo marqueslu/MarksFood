@@ -2,14 +2,16 @@
 using MarksFoodApi.Domain.Commands.Results;
 using MarksFoodApi.Domain.Entities;
 using MarksFoodApi.Domain.Repositories;
-using MarksFoodApi.Shared.Commands;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace MarksFoodApi.Domain.Commands.Handlers
+namespace MarksFoodApi.Domain.Services
 {
-    public class SnackCommandHandler : ICommandHandler<RegisterSnackCommand>, ICommandHandler<UpdateSnackCommand>
+    public class SnackService
     {
         private readonly ISnackRepository _snackRepository;
-        public ICommandResult Handle(RegisterSnackCommand command)
+        public RegisterAndUpdateOutput Create(SnackInput command)
         {
             var snack = new Snack(command.Name);
 
@@ -20,7 +22,7 @@ namespace MarksFoodApi.Domain.Commands.Handlers
 
             _snackRepository.Save(snack);
 
-            return new RegisterAndUpdateCommandResult
+            return new RegisterAndUpdateOutput
             {
                 Success = true,
                 Message = "Snack registered with success.",
@@ -28,25 +30,25 @@ namespace MarksFoodApi.Domain.Commands.Handlers
             };
         }
 
-        public ICommandResult Handle(UpdateSnackCommand command)
+        public RegisterAndUpdateOutput Update(SnackInput snackInput)
         {
-            var snack = _snackRepository.GetById(command.Id);
+            var snack = _snackRepository.GetById(snackInput.Id);
 
             if (snack == null)
             {
                 return null;
             }
 
-            snack.update(command.Name);
+            snack.update(snack.Name);
 
-            foreach (var ingredient in command.Ingredients)
+            foreach (var ingredient in snack.Ingredients)
             {
                 snack.AddIngredient(new Ingredient(ingredient.Name, ingredient.Price));
             }
 
             _snackRepository.Update(snack);
 
-            return new RegisterAndUpdateCommandResult
+            return new RegisterAndUpdateOutput
             {
                 Success = true,
                 Message = "Snack updated with success.",

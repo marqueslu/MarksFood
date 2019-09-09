@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace MarksFoodApi.Domain.Commands.Results
+namespace MarksFoodApi.Domain.Commands.Inputs
 {
-    public class GetIngredientCommandResult
+    public class IngredientInput
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

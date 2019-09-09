@@ -1,13 +1,10 @@
-﻿using MarksFoodApi.Shared.Commands;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace MarksFoodApi.Domain.Commands.Results
 {
-    public class RegisterAndUpdateCommandResult : ICommandResult
+    public class RegisterAndUpdateOutput
     {
-        public RegisterAndUpdateCommandResult()
+        public RegisterAndUpdateOutput()
         {
 
         }

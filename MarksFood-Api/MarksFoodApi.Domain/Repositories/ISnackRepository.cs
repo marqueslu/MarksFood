@@ -10,7 +10,7 @@ namespace MarksFoodApi.Domain.Repositories
         void Save(Snack ingredient);
         void Update(Snack ingredient);
         Snack SnackExists(string name);
-        IEnumerable<GetSnackCommandResult> GetAllSnacks();
+        IEnumerable<SnackOutput> GetAllSnacks();
         Snack GetById(Guid id);
         IEnumerable<Ingredient> GetSnackIngredients(Guid idSnack);
     }
