@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarksFoodApi.Shared", "Mark
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarksFoodApi.Infra", "MarksFoodApi.Infra\MarksFoodApi.Infra.csproj", "{24716225-B319-4969-B8F4-4722622DD996}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarksFoodApi.Api", "MarksFoodApi.Api\MarksFoodApi.Api.csproj", "{32B67584-1701-4ADA-8A69-B44FB4DC3A88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{24716225-B319-4969-B8F4-4722622DD996}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24716225-B319-4969-B8F4-4722622DD996}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24716225-B319-4969-B8F4-4722622DD996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32B67584-1701-4ADA-8A69-B44FB4DC3A88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32B67584-1701-4ADA-8A69-B44FB4DC3A88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32B67584-1701-4ADA-8A69-B44FB4DC3A88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32B67584-1701-4ADA-8A69-B44FB4DC3A88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{614FB2A9-AE09-4A92-A08D-42D6ECEA3994} = {12D26C95-D4D8-4BD4-A4A8-F9C387ECE2EF}
 		{F3432014-5868-4C47-9C74-DDA9965DEBED} = {A2DC7BF5-398E-47F8-800E-B210B0D61596}
 		{24716225-B319-4969-B8F4-4722622DD996} = {A2DC7BF5-398E-47F8-800E-B210B0D61596}
+		{32B67584-1701-4ADA-8A69-B44FB4DC3A88} = {A2DC7BF5-398E-47F8-800E-B210B0D61596}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3409568D-E0E1-4405-8BDE-81EE819A2660}
