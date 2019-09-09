@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MarksFoodApi.Infra.Repositories
 {
@@ -31,15 +32,15 @@ namespace MarksFoodApi.Infra.Repositories
             return snacks;
         }
 
-        public Snack GetById(Guid id)
+        public async Task<Snack> GetById(Guid id)
         {
-            var snack = _context.Connection.Query<Snack>("SELECT [Id], [Name] FROM [Snack] WHERE Id = @Id", new { Id = id }).FirstOrDefault();            
-            return snack;
+            var snack = await _context.Connection.QueryAsync<Snack>("SELECT [Id], [Name] FROM [Snack] WHERE Id = @Id", new { Id = id });
+            return snack.FirstOrDefault();
         }
 
-        public void Save(Snack snack)
+        public async Task Save(Snack snack)
         {
-            _context.Connection.Execute("SP_Snack_Insert", new
+            await _context.Connection.ExecuteAsync("SP_Snack_Insert", new
             {
                 Id = snack.Id,
                 Name = snack.Name
@@ -51,20 +52,20 @@ namespace MarksFoodApi.Infra.Repositories
             return _context.Connection.Query<Snack>("SELECT [Id], [Name] FROM [Snack] WHERE Name = @Name", new { Name = name }).FirstOrDefault();
         }
 
-        public void Update(Snack snack)
+        public async Task Update(Snack snack)
         {
-            _context.Connection.Execute("SP_Snack_Update", new
+            await _context.Connection.ExecuteAsync("SP_Snack_Update", new
             {
                 Id = snack.Id,
                 Name = snack.Name
             }, commandType: CommandType.StoredProcedure);
         }
 
-        public void SaveSnackIngredients(Snack snack)
+        public async Task SaveSnackIngredients(Snack snack)
         {
             foreach (var snackIngredient in snack.Ingredients)
             {
-                _context.Connection.Execute("SP_SnackIngredient_Insert", new
+                await _context.Connection.ExecuteAsync("SP_SnackIngredient_Insert", new
                 {
                     IdIngredient = snackIngredient.Id,
                     IdSnack = snack.Id,
@@ -73,11 +74,11 @@ namespace MarksFoodApi.Infra.Repositories
             }
         }
 
-        public void UpdateSnackIngredients(Snack snack)
+        public async Task UpdateSnackIngredients(Snack snack)
         {
             foreach (var snackIngredient in snack.Ingredients)
             {
-                _context.Connection.Execute("SP_SnackIngredient_Update", new
+                await _context.Connection.ExecuteAsync("SP_SnackIngredient_Update", new
                 {
                     IdIngredient = snackIngredient.Id,
                     IdSnack = snack.Id,

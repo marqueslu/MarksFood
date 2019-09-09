@@ -5,22 +5,32 @@ using MarksFoodApi.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MarksFoodApi.Domain.Services
 {
     public class SnackService
     {
         private readonly ISnackRepository _snackRepository;
-        public RegisterAndUpdateOutput Create(SnackInput command)
-        {
-            var snack = new Snack(command.Name);
 
-            foreach (var ingredient in command.Ingredients)
+        public SnackService(ISnackRepository snackRepository)
+        {
+            _snackRepository = snackRepository;
+        }
+
+        public async Task<RegisterAndUpdateOutput> Create(SnackInput snackInput)
+        {
+            var snack = new Snack(snackInput.Name);
+
+            foreach (var ingredient in snackInput.Ingredients)
             {
-                snack.AddIngredient(new Ingredient(ingredient.Name, ingredient.Price));
+                var ingredientSnack = new Ingredient(ingredient.Name, ingredient.Price);
+                ingredientSnack.AddQuantity(ingredient.Quantity);
+                snack.AddIngredient(ingredientSnack);
             }
 
-            _snackRepository.Save(snack);
+            await _snackRepository.Save(snack);
+            await _snackRepository.UpdateSnackIngredients(snack);
 
             return new RegisterAndUpdateOutput
             {
@@ -30,9 +40,9 @@ namespace MarksFoodApi.Domain.Services
             };
         }
 
-        public RegisterAndUpdateOutput Update(SnackInput snackInput)
+        public async Task<RegisterAndUpdateOutput> Update(SnackInput snackInput)
         {
-            var snack = _snackRepository.GetById(snackInput.Id);
+            var snack = await _snackRepository.GetById(snackInput.Id);
 
             if (snack == null)
             {
@@ -41,12 +51,16 @@ namespace MarksFoodApi.Domain.Services
 
             snack.update(snack.Name);
 
-            foreach (var ingredient in snack.Ingredients)
+            foreach (var ingredient in snackInput.Ingredients)
             {
-                snack.AddIngredient(new Ingredient(ingredient.Name, ingredient.Price));
+                var ingredientSnack = new Ingredient(ingredient.Name, ingredient.Price);
+                ingredientSnack.AddQuantity(ingredient.Quantity);
+                snack.AddIngredient(ingredientSnack);
             }
 
-            _snackRepository.Update(snack);
+            await _snackRepository.Update(snack);
+
+            await _snackRepository.UpdateSnackIngredients(snack);
 
             return new RegisterAndUpdateOutput
             {

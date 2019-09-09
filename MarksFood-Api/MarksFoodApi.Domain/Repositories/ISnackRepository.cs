@@ -2,16 +2,20 @@
 using MarksFoodApi.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MarksFoodApi.Domain.Repositories
 {
     public interface ISnackRepository
     {
-        void Save(Snack ingredient);
-        void Update(Snack ingredient);
+        Task Save(Snack ingredient);
+        Task Update(Snack ingredient);
         Snack SnackExists(string name);
         IEnumerable<SnackOutput> GetAllSnacks();
-        Snack GetById(Guid id);
+        Task<Snack> GetById(Guid id);
         IEnumerable<Ingredient> GetSnackIngredients(Guid idSnack);
+        Task UpdateSnackIngredients(Snack snack);
+        Task SaveSnackIngredients(Snack snack);
+
     }
 }
