@@ -1,13 +1,14 @@
 ﻿using MarksFoodApi.Domain.Commands.Inputs;
 using MarksFoodApi.Domain.Commands.Results;
 using MarksFoodApi.Domain.Entities;
+using MarksFoodApi.Domain.Interfaces.Services;
 using MarksFoodApi.Domain.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MarksFoodApi.Domain.Services
 {
-    public class IngredientService
+    public class IngredientService : IIngredientService
     {
 
         private readonly IIngredientRepository _ingredientRepository;
@@ -16,9 +17,9 @@ namespace MarksFoodApi.Domain.Services
             _ingredientRepository = ingredientRepository;
         }
 
-        public RegisterAndUpdateOutput Create(IngredientInput command)
+        public RegisterAndUpdateOutput Create(IngredientInput ingredientInput)
         {
-            var ingredient = new Ingredient(command.Name, command.Price);
+            var ingredient = new Ingredient(ingredientInput.Name, ingredientInput.Price);
             _ingredientRepository.Save(ingredient);
 
             return new RegisterAndUpdateOutput
@@ -29,16 +30,16 @@ namespace MarksFoodApi.Domain.Services
             };
         }
 
-        public RegisterAndUpdateOutput Update(IngredientInput command)
+        public RegisterAndUpdateOutput Update(IngredientInput ingredientInput)
         {
-            var ingredient = _ingredientRepository.GetById(command.Id);
+            var ingredient = _ingredientRepository.GetById(ingredientInput.Id);
 
             if (ingredient == null)
             {
                 return null;
             }
 
-            ingredient.Update(command.Name, command.Price);
+            ingredient.Update(ingredientInput.Name, ingredientInput.Price);
 
             _ingredientRepository.Update(ingredient);
 

@@ -63,19 +63,20 @@ AS
   END 
 GO
 
-CREATE PROCEDURE SP_discount_Select 
+CREATE PROCEDURE [dbo].[SP_discount_Select] 
 	@IdIngredientAllowed UNIQUEIDENTIFIER 
 AS 
   BEGIN 
-      SELECT id, 
-             NAME, 
-             idingredientallowed, 
-             idingredientrestrict, 
+      SELECT               
+             IdIngredientAllowed, 
+             idingredientrestrict AS IdIngredientNotAllowed,
+			 DiscountType as DiscountRule,
              quantity, 
-             [percent] 
+             [percent]
       FROM   discount 
-      WHERE  idingredientallowed = @IdIngredientAllowed 
-  END
+      WHERE  idingredientallowed = @IdIngredientAllowed
+			 AND ACTIVE = 1
+	END
 GO
 
 CREATE PROCEDURE SP_Get_Snack_ById

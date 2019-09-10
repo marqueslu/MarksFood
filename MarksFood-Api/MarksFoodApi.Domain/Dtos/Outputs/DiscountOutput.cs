@@ -9,9 +9,9 @@ namespace MarksFoodApi.Domain.Dtos.Outputs
     {
         public Guid IdIngredientAllowed { get; set; }
         public Guid? IdIngredientNotAllowed { get; set; }
-        public EDiscountRule discountRule { get; set; }
-        public bool active { get; set; }
-        public int? quantity { get; set; }
-        public decimal discountPercent { get; set; }
+        public EDiscountRule DiscountRule { get; set; }
+        public bool Active { get; set; }
+        public int? Quantity { get; set; }
+        public float Percent { get; set; }
     }
 }

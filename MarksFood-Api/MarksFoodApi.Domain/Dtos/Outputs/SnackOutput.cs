@@ -10,14 +10,14 @@ namespace MarksFoodApi.Domain.Commands.Results
         public Guid Id { get; set; }
         public string Name { get; set; }
         public IEnumerable<IngredientOutput> Ingredients { get; set; }
-        public decimal? Price { get; set; }
+        public float? Price { get; set; }
 
         public void Total()
         {
             Price = Ingredients.Sum(x => x.Price * x.Quantity);
         }
 
-        public void ApplyDiscount(decimal discount)
+        public void ApplyDiscount(float discount)
         {
             Price = Price * (discount / 100);
         }

@@ -2,6 +2,7 @@
 using MarksFoodApi.Domain.Commands.Results;
 using MarksFoodApi.Domain.Entities;
 using MarksFoodApi.Domain.Enums;
+using MarksFoodApi.Domain.Interfaces.Services;
 using MarksFoodApi.Domain.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MarksFoodApi.Domain.Services
 {
-    public class SnackService
+    public class SnackService : ISnackService
     {
         private readonly ISnackRepository _snackRepository;
         private readonly IDiscountRepository _discountRepository;
@@ -87,16 +88,19 @@ namespace MarksFoodApi.Domain.Services
                 {
                     var discount = await _discountRepository.GetByIngredientAllowedId(snackIngredient.Id);
 
-                    if (discount.discountRule == EDiscountRule.RestrictionBased)
+                    if (discount != null)
                     {
-                        var existsSnackNotAllowed = snack.Ingredients.Where(x => x.Id == discount.IdIngredientNotAllowed);
+                        if (discount.DiscountRule == EDiscountRule.RestrictionBased)
+                        {
+                            var existsSnackNotAllowed = snack.Ingredients.Where(x => x.Id == discount.IdIngredientNotAllowed);
 
-                        if (existsSnackNotAllowed == null)
-                            snack.ApplyDiscount(discount.discountPercent);
-                    }
-                    else if (discount.discountRule == EDiscountRule.QuantityBased && snackIngredient.Quantity >= discount.quantity)
-                    {
-                        snack.ApplyDiscount(discount.discountPercent);
+                            if (existsSnackNotAllowed == null)
+                                snack.ApplyDiscount(discount.Percent);
+                        }
+                        else if (discount.DiscountRule == EDiscountRule.QuantityBased && snackIngredient.Quantity >= discount.Quantity)
+                        {
+                            snack.ApplyDiscount(discount.Percent);
+                        }
                     }
                 }
             }

@@ -2,19 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MarksFoodApi.Domain.Commands.Results;
+using MarksFoodApi.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarksFoodApi.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class SnackController : ControllerBase
     {
+        private readonly ISnackService _snackService;
+
+        public SnackController(ISnackService snackService)
+        {
+            _snackService = snackService;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<SnackOutput>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var snacks = await _snackService.GetAllSnacks();
+            return Ok(snacks);
         }
 
         // GET api/values/5

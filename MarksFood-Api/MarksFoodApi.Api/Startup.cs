@@ -1,4 +1,6 @@
-﻿using MarksFoodApi.Domain.Repositories;
+﻿using MarksFoodApi.Domain.Interfaces.Services;
+using MarksFoodApi.Domain.Repositories;
+using MarksFoodApi.Domain.Services;
 using MarksFoodApi.Infra.Context;
 using MarksFoodApi.Infra.DbSettings;
 using MarksFoodApi.Infra.Repositories;
@@ -26,6 +28,9 @@ namespace MarksFoodApi.Api
             services.AddScoped<MarksFoodApiDbContext, MarksFoodApiDbContext>();
             services.AddTransient<ISnackRepository, SnackRepository>();
             services.AddTransient<IIngredientRepository, IngredientRepository>();
+            services.AddTransient<IDiscountRepository, DiscountRepository>();
+            services.AddTransient<ISnackService, SnackService>();
+            services.AddTransient<IIngredientService, IngredientService>();
 
             services.AddCors(options =>
             {

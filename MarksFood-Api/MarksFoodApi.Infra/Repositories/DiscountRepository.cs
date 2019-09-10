@@ -28,7 +28,7 @@ namespace MarksFoodApi.Infra.Repositories
         public async Task<DiscountOutput> GetByIngredientAllowedId(Guid idIngredient)
         {
             var discount = await _context.Connection.QueryAsync<DiscountOutput>(
-                "SP_Discount_Select",
+                "sp_discount_Select",
                 new
                 {
                     IdIngredientAllowed = idIngredient
