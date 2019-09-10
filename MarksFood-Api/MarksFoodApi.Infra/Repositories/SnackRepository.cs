@@ -20,21 +20,16 @@ namespace MarksFoodApi.Infra.Repositories
             _context = context;
         }
 
-        public IEnumerable<SnackOutput> GetAllSnacks()
+        public async Task<IEnumerable<SnackOutput>> GetAllSnacks()
         {
-            var snacks = _context.Connection.Query<SnackOutput>("SELECT [Id], [Name] FROM [Snack]", new { });
-
-            foreach (var snack in snacks)
-            {
-                snack.Ingredients = GetSnackIngredients(snack.Id);
-            }
+            var snacks = await _context.Connection.QueryAsync<SnackOutput>("SP_Snack_Select", new { });
 
             return snacks;
         }
 
         public async Task<Snack> GetById(Guid id)
         {
-            var snack = await _context.Connection.QueryAsync<Snack>("SELECT [Id], [Name] FROM [Snack] WHERE Id = @Id", new { Id = id });
+            var snack = await _context.Connection.QueryAsync<Snack>("SP_Get_Snack_ById", new { Id = id });
             return snack.FirstOrDefault();
         }
 
@@ -49,7 +44,7 @@ namespace MarksFoodApi.Infra.Repositories
 
         public Snack SnackExists(string name)
         {
-            return _context.Connection.Query<Snack>("SELECT [Id], [Name] FROM [Snack] WHERE Name = @Name", new { Name = name }).FirstOrDefault();
+            return _context.Connection.Query<Snack>("", new { Name = name }).FirstOrDefault();
         }
 
         public async Task Update(Snack snack)
@@ -87,9 +82,9 @@ namespace MarksFoodApi.Infra.Repositories
             }
         }
 
-        public IEnumerable<Ingredient> GetSnackIngredients(Guid idSnack)
+        public async Task<IEnumerable<IngredientOutput>> GetSnackIngredients(Guid idSnack)
         {
-            return _context.Connection.Query<Ingredient>("SP_SnackIngredients_Select", new
+            return await _context.Connection.QueryAsync<IngredientOutput>("SP_SnackIngredients_Select", new
             {
                 IdSnack = idSnack
             }, commandType: CommandType.StoredProcedure);

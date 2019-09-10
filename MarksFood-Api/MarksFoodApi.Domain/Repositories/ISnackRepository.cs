@@ -11,9 +11,9 @@ namespace MarksFoodApi.Domain.Repositories
         Task Save(Snack ingredient);
         Task Update(Snack ingredient);
         Snack SnackExists(string name);
-        IEnumerable<SnackOutput> GetAllSnacks();
+        Task<IEnumerable<SnackOutput>> GetAllSnacks();
         Task<Snack> GetById(Guid id);
-        IEnumerable<Ingredient> GetSnackIngredients(Guid idSnack);
+        Task<IEnumerable<IngredientOutput>> GetSnackIngredients(Guid idSnack);
         Task UpdateSnackIngredients(Snack snack);
         Task SaveSnackIngredients(Snack snack);
 

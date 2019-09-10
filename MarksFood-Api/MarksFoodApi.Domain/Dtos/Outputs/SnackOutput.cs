@@ -1,6 +1,7 @@
 ﻿using MarksFoodApi.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarksFoodApi.Domain.Commands.Results
 {
@@ -8,6 +9,17 @@ namespace MarksFoodApi.Domain.Commands.Results
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public IEnumerable<Ingredient> Ingredients { get; set; }
+        public IEnumerable<IngredientOutput> Ingredients { get; set; }
+        public decimal? Price { get; set; }
+
+        public void Total()
+        {
+            Price = Ingredients.Sum(x => x.Price * x.Quantity);
+        }
+
+        public void ApplyDiscount(decimal discount)
+        {
+            Price = Price * (discount / 100);
+        }
     }
 }

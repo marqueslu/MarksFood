@@ -1,9 +1,11 @@
 ﻿using MarksFoodApi.Domain.Commands.Inputs;
 using MarksFoodApi.Domain.Commands.Results;
 using MarksFoodApi.Domain.Entities;
+using MarksFoodApi.Domain.Enums;
 using MarksFoodApi.Domain.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,10 +14,12 @@ namespace MarksFoodApi.Domain.Services
     public class SnackService
     {
         private readonly ISnackRepository _snackRepository;
+        private readonly IDiscountRepository _discountRepository;
 
-        public SnackService(ISnackRepository snackRepository)
+        public SnackService(ISnackRepository snackRepository, IDiscountRepository discountRepository)
         {
             _snackRepository = snackRepository;
+            _discountRepository = discountRepository;
         }
 
         public async Task<RegisterAndUpdateOutput> Create(SnackInput snackInput)
@@ -68,6 +72,37 @@ namespace MarksFoodApi.Domain.Services
                 Message = "Snack updated with success.",
                 Data = snack
             };
+        }
+
+        public async Task<IEnumerable<SnackOutput>> GetAllSnacks()
+        {
+            var snacks = await _snackRepository.GetAllSnacks();
+
+            foreach (var snack in snacks)
+            {
+                snack.Ingredients = await _snackRepository.GetSnackIngredients(snack.Id);
+                snack.Total();
+
+                foreach (var snackIngredient in snack.Ingredients)
+                {
+                    var discount = await _discountRepository.GetByIngredientAllowedId(snackIngredient.Id);
+
+                    if (discount.discountRule == EDiscountRule.RestrictionBased)
+                    {
+                        var existsSnackNotAllowed = snack.Ingredients.Where(x => x.Id == discount.IdIngredientNotAllowed);
+
+                        if (existsSnackNotAllowed == null)
+                            snack.ApplyDiscount(discount.discountPercent);
+                    }
+                    else if (discount.discountRule == EDiscountRule.QuantityBased && snackIngredient.Quantity >= discount.quantity)
+                    {
+                        snack.ApplyDiscount(discount.discountPercent);
+                    }
+                }
+            }
+
+            return snacks;
+
         }
     }
 }

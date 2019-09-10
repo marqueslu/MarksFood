@@ -21,7 +21,7 @@ namespace MarksFoodApi.Infra.Repositories
 
         public async Task<IEnumerable<IngredientOutput>> GetAllIngredients()
         {
-            return await _context.Connection.QueryAsync<IngredientOutput>("SELECT [ID], [NAME], [PRICE] FROM INGREDIENT", new { });
+            return await _context.Connection.QueryAsync<IngredientOutput>("SP_Ingredient_Select", new { });
         }
 
         public Ingredient GetById(Guid id)
