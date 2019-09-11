@@ -13,8 +13,8 @@ namespace MarksFoodApi.Domain.Commands.Results
         public float? Price { get; set; }
 
         public void Total()
-        {
-            Price = Ingredients.Sum(x => x.Price * x.Quantity);
+        {            
+            Price = Ingredients.Sum(x => x.Price);
         }
 
         public void ApplyDiscount(float discount)
