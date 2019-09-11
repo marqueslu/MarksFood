@@ -29,44 +29,28 @@ namespace MarksFoodApi.UnitTests.Services
         [Fact]
         public async void Should_Calculate_The_Snack_Value()
         {
-            _snackRepositoryMock.Setup(x => x.GetAllSnacks()).ReturnsAsync(ListSnacks());
+            _snackRepositoryMock
+                .Setup(x => x.GetAllSnacks())
+                .ReturnsAsync(ListSnacks());
 
-            _snackRepositoryMock.Setup(x => x.GetSnackIngredients(It.IsAny<Guid>())).ReturnsAsync(ListSnackIngredientsWithoutDiscount());
+            _snackRepositoryMock
+                .Setup(x => x.GetSnackIngredients(It.IsAny<Guid>()))
+                .ReturnsAsync(ListSnackIngredients());
 
-            _discountRepositoryMock.Setup(x => x.GetByIngredientAllowedId(It.IsAny<Guid>())).ReturnsAsync(ListIngredientsDiscount());
+            _discountRepositoryMock
+                .Setup(x => x.GetByIngredientAllowedId(It.IsAny<Guid>()))
+                .ReturnsAsync(ListIngredientsDiscount());
 
             var snacksResult = await _snackService.GetAllSnacks();
 
-            var snack = snacksResult.Where(x => x.Id == new Guid("0448BE35-83F1-464A-B4C6-027022FEA44D")).FirstOrDefault();
+            var snack = snacksResult
+                .Where(x => x.Id == new Guid("0448BE35-83F1-464A-B4C6-027022FEA44D"))
+                .FirstOrDefault();
 
-            var snackPrice = ListSnackIngredientsWithoutDiscount().Sum(x => x.Price * x.Quantity);
+            var snackPrice = ListSnackIngredients().Sum(x => x.Price * x.Quantity);
 
             Assert.Equal(snack.Price, snackPrice);
-        }
-
-        [Fact]
-        public async void Should_Calculate_The_Snack_Discount_Value()
-        {
-            var idSnack = new Guid("0448BE35-83F1-464A-B4C6-027022FEA44D");
-            _snackRepositoryMock.Setup(x => x.GetAllSnacks()).ReturnsAsync(ListSnacks());
-
-            _snackRepositoryMock.Setup(x => x.GetSnackIngredients(idSnack)).ReturnsAsync(ListSnackIngredientsWithDiscount());
-
-            _discountRepositoryMock.Setup(x => x.GetByIngredientAllowedId(It.IsAny<Guid>())).ReturnsAsync(ListIngredientsDiscount());
-
-            var snacksResult = await _snackService.GetAllSnacks();
-
-            var snack = snacksResult.Where(x => x.Id == idSnack).FirstOrDefault();
-
-            var discountPercent = ListIngredientsDiscount();
-
-            var snackFinalPrice = ListSnackIngredientsWithDiscount()
-                .Sum(x => (x.Price * x.Quantity));
-
-            var snackDiscount = snackFinalPrice - (snackFinalPrice * (discountPercent.Percent / 100));                
-
-            Assert.Equal(snack.Price, snackDiscount);
-        }
+        }        
 
         #region Mocks
         public IEnumerable<SnackOutput> ListSnacks()
@@ -82,7 +66,7 @@ namespace MarksFoodApi.UnitTests.Services
             return snacks;
         }
 
-        public IEnumerable<IngredientOutput> ListSnackIngredientsWithoutDiscount()
+        public IEnumerable<IngredientOutput> ListSnackIngredients()
         {
             var ingredients = new List<IngredientOutput>
             {
@@ -104,27 +88,7 @@ namespace MarksFoodApi.UnitTests.Services
             return ingredients;
         }
 
-        public IEnumerable<IngredientOutput> ListSnackIngredientsWithDiscount()
-        {
-            var ingredients = new List<IngredientOutput>
-            {
-                new IngredientOutput
-                {
-                    Id = new Guid("683BE3CE-54C2-4229-8B89-A41A81450A0F"),
-                    Name = "Hambúrguer de carne",
-                    Quantity = 1,
-                    Price = 3
-                },
-                new IngredientOutput
-                {
-                    Id = new Guid("4B9EE171-46AD-48B1-B7A1-C7339D8F00C7"),
-                    Name = "Queijo",
-                    Quantity = 3,
-                    Price = (float) 1.5
-                }
-            };
-            return ingredients;
-        }
+        
         public DiscountOutput ListIngredientsDiscount()
         {
             var discount = new DiscountOutput {
