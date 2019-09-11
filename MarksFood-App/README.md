@@ -3,7 +3,7 @@
 ### Pré-Requisitos
 
 - Nodejs. Disponível em [nodejs.org](https://nodejs.org)
--Angular na versão 8. Instruções de instalação do Angular CLI Disponível em [cli.angular.io](https://cli.angular.io)
+- Angular na versão 8. Instruções de instalação do Angular CLI Disponível em [cli.angular.io](https://cli.angular.io)
 
 ### Configuração do Projeto
 
