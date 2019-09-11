@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace MarksFoodApi.Api
 {
@@ -42,7 +43,21 @@ namespace MarksFoodApi.Api
             services.AddTransient<ISnackService, SnackService>();
             services.AddTransient<IIngredientService, IngredientService>();
 
-            
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1",
+                    new Info
+                    {
+                        Title = "MarksFood",
+                        Version = "v1",
+                        Contact = new Contact
+                        {
+                            Name = "Lucas Marques",
+                            Url = "https://github.com/marqueslu"
+                        }
+                    });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +71,13 @@ namespace MarksFoodApi.Api
             app.UseCors("CorsPolicy");
 
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MarksFood V1");
+                c.RoutePrefix = string.Empty;
 
+            });
 
 
             Settings.ConnectionString = Configuration.GetConnectionString("CnnStr");
