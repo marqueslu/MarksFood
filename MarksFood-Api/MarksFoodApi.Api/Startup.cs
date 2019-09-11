@@ -24,6 +24,16 @@ namespace MarksFoodApi.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder =>
+                        builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                .Build());
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<MarksFoodApiDbContext, MarksFoodApiDbContext>();
             services.AddTransient<ISnackRepository, SnackRepository>();
@@ -32,15 +42,7 @@ namespace MarksFoodApi.Api
             services.AddTransient<ISnackService, SnackService>();
             services.AddTransient<IIngredientService, IngredientService>();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials()
-                .Build());
-            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,14 +53,10 @@ namespace MarksFoodApi.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("CorsPolicy");
+
             app.UseMvc();
 
-            app.UseCors(x =>
-            {
-                x.AllowAnyHeader();
-                x.AllowAnyMethod();
-                x.AllowAnyOrigin();
-            });
 
 
             Settings.ConnectionString = Configuration.GetConnectionString("CnnStr");
