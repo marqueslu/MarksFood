@@ -1,0 +1,22 @@
+<h3>Lanches</h3>
+<div class=row>
+    <div class="col-md-4" *ngFor="let snack of snacks">
+        <div class="card">
+            <div class="card-header">
+                {{snack.name}}
+            </div>
+            <div class="card-body">
+                <table>
+                    <tbody *ngFor="let ingredient of snack.ingredients">
+                        <td>{{ingredient.quantity}} x</td>
+                        <td>{{ingredient.name}}</td>
+                        <td>R$ {{ingredient.price | number: '1.2-2'}}</td>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <strong>Total:</strong> R$ {{snack.price | number: '1.2-2'}}
+            </div>
+        </div>
+    </div>    
+</div>
