@@ -1,27 +1,20 @@
-# MarksFoodApp
+# FrontEnd
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.6.
+### Pré-Requisitos
 
-## Development server
+- Nodejs. Disponível em [nodejs.org](https://nodejs.org)
+-Angular na versão 8. Instruções de instalação do Angular CLI Disponível em [cli.angular.io](https://cli.angular.io)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Configuração do Projeto
 
-## Code scaffolding
+Após instalação dos pré-requisitos (caso não possua), abra o diretório `MarksFood-App` e execute o comando `npm install`.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Obs. Caso esteja usando alguma distribuição linux, será necessário executar o comando `sudo npm install`.
 
-## Build
+### Configurações de Execução
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Após instalar os pacotes do node, acesse o diretório `MarksFood-App/app/environments/` e altere o arquivo `environment.ts` adicionando na propriedade **API**, a porta em que a aplicação esta rodando locamente na sua máquina.
 
-## Running unit tests
+Obs. Esse passo é importante pois existe diferença na porta em que a aplicação é executada via Visual Studio e Via Visual Studio Code
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Após esse procedimento, execute o comando `ng serve -o` via linha de comando para execução da aplicação.
