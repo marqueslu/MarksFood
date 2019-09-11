@@ -86,6 +86,7 @@ namespace MarksFoodApi.Domain.Services
 
                 foreach (var snackIngredient in snack.Ingredients)
                 {
+                    snackIngredient.Total();
                     var discount = await _discountRepository.GetByIngredientAllowedId(snackIngredient.Id);
 
                     if (discount != null)
@@ -98,8 +99,8 @@ namespace MarksFoodApi.Domain.Services
                                 snack.ApplyDiscount(discount.Percent);
                         }
                         else if (discount.DiscountRule == EDiscountRule.QuantityBased && snackIngredient.Quantity >= discount.Quantity)
-                        {
-                            snack.ApplyDiscount(discount.Percent);
+                        {                            
+                            snackIngredient.ApplyDiscount(discount.Percent);
                         }
                     }
                 }
