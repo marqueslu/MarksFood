@@ -13,7 +13,7 @@ Obs. Caso esteja usando alguma distribuição linux, será necessário executar 
 
 ### Configurações de Execução
 
-Após instalar os pacotes do node, acesse o diretório `MarksFood-App/app/environments/` e altere o arquivo `environment.ts` adicionando na propriedade **API**, a porta em que a aplicação esta rodando locamente na sua máquina.
+Após instalar os pacotes do node, acesse o diretório `MarksFood-App/app/environments/` e altere o arquivo `environment.ts` adicionando na propriedade **API**, a porta em que a api esta rodando localmente na sua máquina.
 
 Obs. Esse passo é importante pois existe diferença na porta em que a aplicação é executada via Visual Studio e Via Visual Studio Code
 

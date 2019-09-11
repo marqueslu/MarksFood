@@ -8,7 +8,7 @@
             <div class="card-body">
                 <table>
                     <tbody *ngFor="let ingredient of snack.ingredients">
-                        <td>{{ingredient.quantity}} x</td>
+                        <td>{{ingredient.quantity}} x </td>
                         <td>{{ingredient.name}}</td>
                         <td>R$ {{ingredient.price | number: '1.2-2'}}</td>
                     </tbody>
